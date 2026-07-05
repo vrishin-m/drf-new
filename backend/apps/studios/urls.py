@@ -1,8 +1,9 @@
-from django.urls import path
-from . import views
+from rest_framework.routers import DefaultRouter
+from .views import StudioViewSet
 
-app_name = 'studios' 
+router = DefaultRouter()
+router.register(r'studios', StudioViewSet, basename='studio')
 
-urlpatterns = [
- 
-]
+urlpatterns = []
+
+urlpatterns += router.urls
