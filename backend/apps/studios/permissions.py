@@ -71,7 +71,7 @@ class IsProjectLeadOrAbove(BasePermission):
         return has_min_role(
             request.user,
             studio_slug,
-            'project_admin'
+            'project_lead'
         )
 
 
