@@ -11,6 +11,7 @@ build/
 coverage/
 
 # Local Environment Variables
+.venv
 .env
 .env.local
 .env.development.local
@@ -26,11 +27,44 @@ coverage/
 Thumbs.db
 *.localhistory
 
-# IDEs and Code Editors
-.idea/
+
+
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Databases (If using local SQLite)
+*.sqlite3
+*.db
+
+# Environment Variables / Secrets
+.env
+.env.local
+.env.*
+*.env
+
+# IDEs and Editors
 .vscode/
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.swp
+
+# Media and Static files (uploaded by users / gathered)
+/media/
+/static_root/
+/staticfiles/
+
+# OS generated files
+.DS_Store
+Thumbs.db
