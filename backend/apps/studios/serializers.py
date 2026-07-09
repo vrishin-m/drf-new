@@ -12,7 +12,7 @@ class UserSummarySerializer(serializers.ModelSerializer):
 class StudioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Studio
-        fields = ['id', 'name', 'slug', 'description', 'member_count']
+        fields = ['id', 'name', 'slug', 'description']
         read_only_fields = ['id']
 
 

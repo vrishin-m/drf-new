@@ -30,18 +30,25 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticated , IsStudioMember , HasMinRole]
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['studio_slug'] = self.kwargs.get('studio_slug')
+        return context
+    
     def get_queryset(self):
-        qs = Project.objects.all()
-        studio_id = self.request.query_params.get('studio')
-        if studio_id:
-            qs = qs.filter(studio_id = studio_id)
-        return qs
+        studio_slug = self.kwargs.get('studio_slug')
+        if studio_slug:
+            return Project.objects.filter(studio__slug=studio_slug)
+        return Project.objects.all()
+
 
     def perform_create(self, serializer):
+        
         serializer.save(created_by = self.request.user)
     required_role= 'project_lead'
 
 
+   
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class= TaskSerializer

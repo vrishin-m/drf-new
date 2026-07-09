@@ -2,10 +2,14 @@ from rest_framework import serializers
 from .models import StageTransitionLog,Project , Tag , Task , Comment , TaskAttachment , ProjectAttachment
 
 class ProjectSerializer(serializers.ModelSerializer):
+    studio = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Project
         fields = ['id', 'studio', 'name', 'description', 'created_by', 'is_archived', 'created_at']
-        read_only_fields = ['created_by', 'created_at']
+        read_only_fields = ['studio', 'created_by', 'created_at']
+
+
+    
 
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:

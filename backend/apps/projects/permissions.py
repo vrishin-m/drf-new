@@ -27,18 +27,19 @@ def get_studio_for(obj):
 
 class IsStudioMember(BasePermission):
     def has_permission(self, request, view):
-        if view.action=='create':
+        if view.action == 'create':
             studio_id = request.data.get('studio')
-            if not studio_id:
-                return False 
-            return Membership.objects.filter(user=request.user , studio_id=studio_id).exists()
-        return True 
+            
+            if studio_id:
+                return Membership.objects.filter(user=request.user, studio_id=studio_id).exists()
 
+            studio_slug = view.kwargs.get('studio_slug')
+            if studio_slug:
+                return Membership.objects.filter(user=request.user, studio__slug=studio_slug).exists()
 
-    def has_object_permission(self, request, view, obj):
-        studio = get_studio_for(obj=obj)
-        return get_role(request.user , studio ) is not None 
-
+            return False 
+            
+        return True
 class HasMinRole(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method in ('GET' , 'HEAD' , 'OPTIONS'):      #reading is always allowed , is user is a part of studio 

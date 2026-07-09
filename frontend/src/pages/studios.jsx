@@ -120,23 +120,22 @@ const handleSelectStudio = (studio) => {
       ) : (
         <div style={styles.studioGrid}>
           {studios.map((studio) => {
-            const isActive = studio.slug === activeStudioSlug;
+          
             
             return (
               <div 
                 key={studio.id} 
                 style={{ 
                   ...styles.studioCard, 
-                  borderColor: isActive ? '#3182ce' : '#e2e8f0',
-                  backgroundColor: isActive ? '#f7fafc' : '#fff',
-                  boxShadow: isActive ? '0 0 0 2px #ebf8ff' : '0 2px 4px rgba(0,0,0,0.02)'
+                 
+                 
                 }}
               >
              
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <strong style={{ fontSize: '16px', color: '#1a202c' }}>{studio.name}</strong>
-                    {isActive && <span style={styles.activeBadge}>Active</span>}
+      
                   </div>
                   <span style={{ fontSize: '12px', color: '#a0aec0' }}>Slug: {studio.slug}</span>
                 </div>
@@ -146,10 +145,10 @@ const handleSelectStudio = (studio) => {
                   onClick={() => handleSelectStudio(studio)}
                   style={{
                     ...styles.selectButton,
-                    backgroundColor: isActive ? '#4a5568' : '#3182ce'
+                   
                   }}
                 >
-                  {isActive ? 'Workspace Active' : 'Enter Workspace'}
+              
                 </button>
               </div>
             );

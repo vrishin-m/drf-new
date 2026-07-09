@@ -64,7 +64,7 @@ export default function Projects() {
     defaultDeadline.setDate(defaultDeadline.getDate() + 30);
 
     const payload = {
-      title: newProjectName,
+      name: newProjectName,
       description: newProjectDesc,
       deadline: defaultDeadline.toISOString(),
       lead: currentUserId,       

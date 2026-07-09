@@ -29,7 +29,7 @@ class StudioViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Studio.objects.filter(
             memberships__user=self.request.user,
-            is_active=True
+
         ).distinct()
 
     def perform_create(self, serializer):
@@ -51,13 +51,9 @@ class StudioViewSet(viewsets.ModelViewSet):
 
         if request.method == "POST":
             user_id = request.data.get("user")
-            role = request.data.get("role", Role.DESIGNER)
+            role = request.data.get("role", "designer")
 
-            if role not in Role.values:
-                return Response(
-                    {"role": "Invalid role."},
-                    status=status.HTTP_400_BAD_REQUEST
-                )
+
 
             User = get_user_model()
             user = get_object_or_404(User, id=user_id)
@@ -122,9 +118,9 @@ class StudioViewSet(viewsets.ModelViewSet):
 
             if (
                 membership.user == request.user
-                and membership.role == Role.STUDIO_ADMIN
+                and membership.role == "studio_admin"
                 and new_role
-                and new_role != Role.STUDIO_ADMIN
+                and new_role != "studio_admin"
                 and not self._has_another_admin(membership)
             ):
                 return Response(
@@ -145,7 +141,7 @@ class StudioViewSet(viewsets.ModelViewSet):
 
         if (
             membership.user == request.user
-            and membership.role == Role.STUDIO_ADMIN
+            and membership.role == "studio_admin"
             and not self._has_another_admin(membership)
         ):
             return Response(
@@ -162,11 +158,7 @@ class StudioViewSet(viewsets.ModelViewSet):
         target_email = request.data.get('invite_email')
         role = request.data.get('role', 'designer')
 
-        if role not in Role.values:
-            return Response(    
-                {"role": "Invalid role."},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+
 
         try:
             User = get_user_model()
@@ -187,6 +179,6 @@ class StudioViewSet(viewsets.ModelViewSet):
     def _has_another_admin(self, membership):
         return Membership.objects.filter(
             studio=membership.studio,
-            role=Role.STUDIO_ADMIN
+            role="studio_admin"
         ).exclude(id=membership.id).exists()
  

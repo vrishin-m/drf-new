@@ -1,3 +1,4 @@
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     CommentViewSet,
@@ -9,11 +10,18 @@ from .views import (
 )
 
 router = DefaultRouter()
-router.register('projects', ProjectViewSet, basename='project')
 router.register('work-items', TaskViewSet, basename='workitem')
 router.register('comments', CommentViewSet, basename='comment')
 router.register('project-attachments', ProjectAttachmentViewSet, basename='project-attachment')
 router.register('task-attachments', TaskAttachmentViewSet, basename='task-attachment')
 router.register('tags', TagViewSet, basename='tag')
 
-urlpatterns = router.urls
+urlpatterns = [
+    path(
+        'studios/<str:studio_slug>/projects/', 
+        ProjectViewSet.as_view({'get': 'list', 'post': 'create'}), 
+        name='studio-projects'
+    ),
+  
+    path('', include(router.urls)),
+]
